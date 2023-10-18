@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { startTransition, useState, useTransition } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTask, editTask } from '../slices/TaskSlice'
 import deletelogo from '../assets/deletelogo.svg'
@@ -6,10 +6,15 @@ import edit from '../assets/edit.svg'
 import { Link, NavLink } from 'react-router-dom'
 
 function TaskList() {
-  const [isChecked, setIsChecked] = useState(false)
+  const [isCompleted, setIsCompleted] = useState(false)
   const tasks = useSelector(state => state.tasks);
   const dispatch = useDispatch();
 
+  const handleCompletedTask = (task) => {
+    setIsCompleted(!isCompleted)
+    task = {...task, isCompleted: !isCompleted}
+    dispatch(editTask(task))
+  }
   return (
     <div className="col-md-12">
       <div className="mt-3 py-4 d-flex align-items-center justify-content-between">
@@ -28,9 +33,10 @@ function TaskList() {
           {tasks.map((task, index) => {
             return (
               <tr key={index}>
+                {console.log('tasl', task)}
                 <td scope="row">
                   <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked={isChecked} onClick={() => setIsChecked(!isChecked)} />
+                    <input className="form-check-input" checked={task.isCompleted} type="checkbox" value="" id="flexCheckChecked" onClick={() => handleCompletedTask(task)} />
                   </div>
                 </td>
                 <td>{task.title} </td>

@@ -12,11 +12,12 @@ export const TaskSlice = createSlice({
             state.tasks.push(action.payload)
         },
         editTask: (state, action) => {
-            const { title, description, id } = action.payload;
+            const { title, description, id, isCompleted } = action.payload;
             const todoToEdit = state.tasks.find((task) => task.id === id);
             if (todoToEdit) {
                 todoToEdit.title = title;
                 todoToEdit.description = description
+                todoToEdit.isCompleted = isCompleted
             }
         },
         deleteTask: (state, action) => {
