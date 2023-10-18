@@ -1,13 +1,16 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
+import HomePage from './pages/HomePage';
+import Task from './pages/Task';
+
 
 function App() {
-
   return (
-    <div className="container mt-5">
-      <TaskForm />
-      <TaskList />
+        <div className="container mt-5">
+      <Routes>
+        <Route path='' element={<HomePage />} />
+        <Route path='/update/:id' element={<Task />} />
+      </Routes>
     </div>
   );
 }

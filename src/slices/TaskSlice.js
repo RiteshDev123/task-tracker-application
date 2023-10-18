@@ -1,22 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 
 const initialState = {
-    tasks: [
-        {
-            "id": 1,
-            "title": 'this is',
-            "description": 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est voluptas nisi neque molestias! Repudiandae quia ab impedit dolore dolorem tempore',
-            "last Date": '29/20/2024',
-
-        },
-        {
-            "id": 2,
-            "title": 'to do',
-            "description": 'this is the description',
-            "last Date": '29/20/2024',
-        },
-
-    ],
+    tasks: [],
 }
 
 export const TaskSlice = createSlice({
@@ -27,11 +12,18 @@ export const TaskSlice = createSlice({
             state.tasks.push(action.payload)
         },
         editTask: (state, action) => {
-       
+            const { title, description, id } = action.payload;
+            const todoToEdit = state.tasks.find((task) => task.id === id);
+            if (todoToEdit) {
+                todoToEdit.title = title;
+                todoToEdit.description = description
+            }
         },
         deleteTask: (state, action) => {
             const { index } = action.payload
+            console.log(action.payload)
             state.tasks.splice(index, 1);
+
         }
     },
 })
