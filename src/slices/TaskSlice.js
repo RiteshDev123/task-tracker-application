@@ -30,6 +30,8 @@ export const TaskSlice = createSlice({
        
         },
         deleteTask: (state, action) => {
+            const { index } = action.payload
+            state.tasks.splice(index, 1);
         }
     },
 })
