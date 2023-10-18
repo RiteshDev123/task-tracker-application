@@ -1,24 +1,46 @@
-import React, { startTransition, useState, useTransition } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTask, editTask } from '../slices/TaskSlice'
 import deletelogo from '../assets/deletelogo.svg'
 import edit from '../assets/edit.svg'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import FilterTask from './FilterTask'
 
 function TaskList() {
   const [isCompleted, setIsCompleted] = useState(false)
-  const tasks = useSelector(state => state.tasks);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [alltask, setAllTask] = useState()
+  let tasks = useSelector(state => state.tasks);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+      if (selectedOption === 'completed') {
+         tasks = tasks.filter(task => task.isCompleted === true)
+         setAllTask(tasks)
+      } else if (selectedOption === 'not-completed') {
+         tasks = tasks.filter(task => task.isCompleted !== true)
+         setAllTask(tasks)
+      }
+      setAllTask(tasks)
+  }, [selectedOption])
+
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
 
   const handleCompletedTask = (task) => {
     setIsCompleted(!isCompleted)
-    task = {...task, isCompleted: !isCompleted}
+    task = { ...task, isCompleted: !isCompleted }
     dispatch(editTask(task))
   }
+
+
   return (
     <div className="col-md-12">
       <div className="mt-3 py-4 d-flex align-items-center justify-content-between">
         <h2 className="fw-bold fs-1 text-primary"> Task List</h2>
+        <FilterTask handleSelectChange={handleSelectChange} selectedOption={selectedOption} />
       </div>
       <table className="table table-responsive table-striped table-hover">
         <thead className="table-dark">
@@ -30,10 +52,9 @@ function TaskList() {
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task, index) => {
+          {alltask && alltask.map((task, index) => {
             return (
               <tr key={index}>
-                {console.log('tasl', task)}
                 <td scope="row">
                   <div className="form-check">
                     <input className="form-check-input" checked={task.isCompleted} type="checkbox" value="" id="flexCheckChecked" onClick={() => handleCompletedTask(task)} />

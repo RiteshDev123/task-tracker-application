@@ -1,15 +1,18 @@
-import React, { startTransition, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { editTask } from '../slices/TaskSlice';
-import { Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import EditTask from '../components/EditTask';
 
 const Task = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const tasks = useSelector((state) => state.tasks);
     const { id } = useParams();
     const [formData, setFormData] = useState({});
     const [isLoading, setisLoading]  = useState(false)
+    
     useEffect(() => {
         const taskToEdit = tasks.find((task) => task.id === id);
         setFormData(taskToEdit);
@@ -21,7 +24,6 @@ const Task = () => {
         dueDate: '',
     });
 
-    console.log(formData)
     const validateForm = () => {
         let valid = true;
         const newErrors = {
@@ -54,10 +56,10 @@ const Task = () => {
         e.preventDefault();
         if (validateForm()) {
             dispatch(editTask(formData))
-            startTransition(() => {
+            setTimeout(() => {
                 setisLoading(false);
-              });
-            console.log('hello')
+                navigate('/')
+              },100);
         }
     };
 
@@ -74,59 +76,7 @@ const Task = () => {
     };
 
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-body">
-                            <h2>Edit Task</h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="title">Title</label>
-                                    <input
-                                        type="text"
-                                        id="title"
-                                        name="title"
-                                        value={formData?.title}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                    <div className="text-danger">{errors.title}</div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="description">Description</label>
-                                    <textarea
-                                        id="description"
-                                        name="description"
-                                        value={formData?.description}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                    <div className="text-danger">{errors.description}</div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="dueDate">Due Date</label>
-                                    <input
-                                        type="date"
-                                        id="dueDate"
-                                        name="dueDate"
-                                        value={formData?.dueDate}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                    <div className="text-danger">{errors.dueDate}</div>
-                                </div>
-                                <div className="form-group mt-2">
-                                    {isLoading ? <Spinner/> : <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                                        Save Changes
-                                    </button>}
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       <EditTask formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} errors={errors} isLoading={isLoading}/>
     );
 };
 
