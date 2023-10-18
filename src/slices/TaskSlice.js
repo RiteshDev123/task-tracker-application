@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 const initialState = {
     tasks: [
@@ -23,20 +23,18 @@ export const TaskSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        Addtask: (state, payload) => {
-          
+        Addtask: (state, action) => {
+            state.tasks.push(action.payload)
         },
-        editTask: (state) => {
-            state.value += 1
+        editTask: (state, action) => {
+       
         },
-        deleteTask: (state, payload) => {
-            
-
+        deleteTask: (state, action) => {
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { editTask, deleteTask } = TaskSlice.actions;
+export const { editTask, deleteTask, Addtask } = TaskSlice.actions;
 
 export default TaskSlice.reducer
