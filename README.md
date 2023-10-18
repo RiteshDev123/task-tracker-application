@@ -2,7 +2,6 @@
 
 The Task Tracker app is a simple task management application built using React. It allows users to add, edit, delete, and mark tasks as completed.
 
-![Task Tracker App Screenshot](screenshot.png)
 
 ## Features
 
@@ -39,4 +38,4 @@ Follow these steps to get the Task Tracker app running on your local machine:
     ```shell
     yarn start
 
-### you can see the app running at localhost:3000
+### you can see the app running at http://localhost:3000
