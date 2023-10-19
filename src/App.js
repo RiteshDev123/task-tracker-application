@@ -7,7 +7,6 @@ import { useState } from 'react';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <div className="container mt-5">
       <Routes>
@@ -19,7 +18,6 @@ function App() {
         <Route
          path='/update/:id'
          element={<Task />}
-         isAuthenticated={isAuthenticated}
          />
         <Route
           path="*"
