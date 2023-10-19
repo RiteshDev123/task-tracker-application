@@ -54,7 +54,6 @@ function SignInPage() {
     }
   };
 
-  console.log(formData)
   return (
     <>
     <SignIn showAlert={showAlert} handleSubmit={handleSubmit} handleChange={handleChange} errors={errors} formData={formData}/>

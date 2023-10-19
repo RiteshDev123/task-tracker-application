@@ -16,7 +16,6 @@ const Task = () => {
   const [isLoading, setisLoading] = useState(false)
   const [userLoading, setUserLoading] = useState(true)
 
-  console.log(tasks.length)
   useEffect(() => {
     if (Object.keys(user.user).length === 0) {
       navigate('/login')

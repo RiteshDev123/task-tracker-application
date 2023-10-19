@@ -31,7 +31,6 @@ const TaskForm = () => {
 
   const onSubmit = (values, { resetForm }) => {
     // Handle form submission here, e.g., send data to an API
-    console.log(values);
     dispatch(Addtask({...values, isCompleted: false, id: uuid()}))
     resetForm();
   };
