@@ -36,7 +36,7 @@ const TaskForm = () => {
   };
 
   return (
-    <div className="container">
+    <div >
       <h2 className='fw-bold fs-1 text-primary'>Create a New Task</h2>
       <Formik
         initialValues={initialValues}

@@ -45,19 +45,21 @@ function TaskList() {
             <h2 className="fw-bold fs-1 text-primary"> Task List</h2>
             <FilterTask handleSelectChange={handleSelectChange} selectedOption={selectedOption} />
           </div>
-          <table className="table table-responsive table-striped table-hover">
+          <div className='table-responsive'>
+          <table className="table table-striped table-hover">
             <thead className="table-dark">
               <tr>
                 <th></th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Due Date</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
              {alltask?.map((task, index) => {
                 return (
-                  <tr key={index}>
+                  <tr key={index} >
                     <td scope="row">
                       <div className="form-check">
                         <input className="form-check-input" checked={task.isCompleted} type="checkbox" value="" id="flexCheckChecked" onChange={() => handleCompletedTask(task)} />
@@ -65,6 +67,8 @@ function TaskList() {
                     </td>
                     <td>{task.title} </td>
                     <td>{task.description}</td>
+                    <td>{task.dueDate}</td>
+
                     <td>
                       <div className="d-flex gap-3">
                         <NavLink to={`/update/${task.id}`} className="bg-info p-2"><img src={edit} width="20" height="20" /></NavLink>
@@ -77,6 +81,7 @@ function TaskList() {
     
             </tbody>
           </table>
+          </div>
         </div>
     )}
 
