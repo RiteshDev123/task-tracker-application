@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 
 function HomePage() {
-	const tasks = useSelector(state => state.tasks);
+	const tasks = useSelector(state => state.tasks.tasks);
+	const [isLoading, setisLoading] = useState(true);
+	const user = useSelector(state => state.user)
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (Object.keys(user.user).length === 0) {
+			navigate('/login')
+		}
+
+		setisLoading(false)
+	}, [user])
 
 	return (
 		<>
-			<TaskForm />
-			{tasks.length > 0 && <TaskList />}
+			{isLoading ? <Spinner /> :
+				(
+					<>
+						<TaskForm />
+						{tasks.length > 0 && <TaskList />}
+					</>
+				)}
+
 		</>
 	)
 }

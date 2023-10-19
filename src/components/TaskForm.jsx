@@ -1,9 +1,10 @@
 // src/components/TaskForm.js
-import React from 'react';
+import React, { useId } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Addtask } from '../slices/TaskSlice';
+import {v4 as uuid} from 'uuid';
 
 const TaskForm = () => {
   const dispatch = useDispatch()
@@ -16,13 +17,22 @@ const TaskForm = () => {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
-    dueDate: Yup.date().required('Due Date is required'),
-  });
+    dueDate: Yup.date()
+    .typeError('Due Date must be a valid date')
+    .required('Due Date must be a valid date')
+    .test('is-valid-date', 'Invalid date format', (value) => {
+      if (value === null || value === undefined) {
+        return false; // Handle empty values as needed
+      }            
+
+      return !isNaN(value);
+    }),
+    });
 
   const onSubmit = (values, { resetForm }) => {
     // Handle form submission here, e.g., send data to an API
     console.log(values);
-    dispatch(Addtask({...values, isCompleted: false}))
+    dispatch(Addtask({...values, isCompleted: false, id: uuid()}))
     resetForm();
   };
 

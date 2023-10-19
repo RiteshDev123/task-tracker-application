@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     tasks: [],
@@ -21,10 +21,8 @@ export const TaskSlice = createSlice({
             }
         },
         deleteTask: (state, action) => {
-            const { index } = action.payload
-            console.log(action.payload)
-            state.tasks.splice(index, 1);
-
+            const { task } = action.payload
+            state.tasks.splice(task,1)
         }
     },
 })
