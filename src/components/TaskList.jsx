@@ -60,7 +60,7 @@ function TaskList() {
                   <tr key={index}>
                     <td scope="row">
                       <div className="form-check">
-                        <input className="form-check-input" checked={task.isCompleted} type="checkbox" value="" id="flexCheckChecked" onClick={() => handleCompletedTask(task)} />
+                        <input className="form-check-input" checked={task.isCompleted} type="checkbox" value="" id="flexCheckChecked" onChange={() => handleCompletedTask(task)} />
                       </div>
                     </td>
                     <td>{task.title} </td>
